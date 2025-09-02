@@ -78,11 +78,11 @@ void ABasePlayer::Move(const FInputActionValue& Value)
 		AddMovementInput(RightDirection, moveVector.X);
 	}
 }
-void ABasePlayer::Jump(const FInputActionValue& Value)
+void ABasePlayer::Jump()
 {
 	Super::Jump();
 }
-void ABasePlayer::StopJumping(const FInputActionValue& Value)
+void ABasePlayer::StopJumping()
 {
 	Super::StopJumping();
 }

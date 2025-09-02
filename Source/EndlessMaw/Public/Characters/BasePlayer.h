@@ -21,8 +21,8 @@ protected:
 	// look with mouse x
 	void Look(const FInputActionValue& Value);
 	// jump with space
-	void Jump(const FInputActionValue& Value);
-	void StopJumping(const FInputActionValue& Value);
+	void Jump();
+	void StopJumping();
 
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 	virtual void BeginPlay() override;
