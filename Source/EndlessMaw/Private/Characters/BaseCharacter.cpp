@@ -3,6 +3,7 @@
 
 #include "Characters/BaseCharacter.h"
 
+
 // Sets default values
 ABaseCharacter::ABaseCharacter()
 {
