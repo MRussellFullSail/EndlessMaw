@@ -13,8 +13,7 @@ void UBCAnimInstance::NativeUpdateAnimation(float DeltaSeconds)
 		FVector returnVector = pawn->GetVelocity();
 		Velocity = returnVector.Size();
 		FRotator returnRotator = pawn->GetActorRotation();
-		//UKismetAnimationLibrary::CalculateDirection
-		Direction = CalculateDirection(returnVector, returnRotator);
+		Direction = UKismetAnimationLibrary::CalculateDirection(returnVector, returnRotator);
 	}
 	else {
 		PreviewWindowUpdate();
