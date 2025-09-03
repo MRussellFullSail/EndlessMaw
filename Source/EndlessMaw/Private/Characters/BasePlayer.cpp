@@ -13,6 +13,7 @@
 
 ABasePlayer::ABasePlayer()
 {
+	PrimaryActorTick.bStartWithTickEnabled = false;
 	// Set size for collision capsule
 	GetCapsuleComponent()->InitCapsuleSize(42.f, 96.0f);
 
@@ -27,8 +28,6 @@ ABasePlayer::ABasePlayer()
 
 	// Note: For faster iteration times these variables, and many more, can be tweaked in the Character Blueprint
 	// instead of recompiling to adjust them
-	GetCharacterMovement()->JumpZVelocity = 700.f;
-	GetCharacterMovement()->AirControl = 0.35f;
 	GetCharacterMovement()->MaxWalkSpeed = 500.f;
 	GetCharacterMovement()->MinAnalogWalkSpeed = 20.f;
 	GetCharacterMovement()->BrakingDecelerationWalking = 2000.f;
@@ -58,6 +57,7 @@ void ABasePlayer::Look(const FInputActionValue& Value)
 		AddControllerPitchInput(LookAxisVector.Y);
 	}
 }
+
 void ABasePlayer::Move(const FInputActionValue& Value)
 {
 	FVector2D moveVector = Value.Get<FVector2D>();
@@ -78,14 +78,6 @@ void ABasePlayer::Move(const FInputActionValue& Value)
 		AddMovementInput(RightDirection, moveVector.X);
 	}
 }
-void ABasePlayer::Jump()
-{
-	Super::Jump();
-}
-void ABasePlayer::StopJumping()
-{
-	Super::StopJumping();
-}
 
 void ABasePlayer::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 {
@@ -93,8 +85,9 @@ void ABasePlayer::SetupPlayerInputComponent(UInputComponent* PlayerInputComponen
 	if (UEnhancedInputComponent* input = CastChecked<UEnhancedInputComponent>(PlayerInputComponent)) {
 		input->BindAction(MoveAction, ETriggerEvent::Triggered, this, &ABasePlayer::Move);
 		input->BindAction(LookAction, ETriggerEvent::Triggered, this, &ABasePlayer::Look);
-		input->BindAction(JumpAction, ETriggerEvent::Started, this, &ABasePlayer::Jump);
-		input->BindAction(JumpAction, ETriggerEvent::Completed, this, &ABasePlayer::StopJumping);
+	}
+	else {
+		UE_LOG(LogTemp, Error, TEXT("Failed input castcheck for baseplayer setupplayerinputcomponent"));
 	}
 }
 
@@ -109,5 +102,11 @@ void ABasePlayer::BeginPlay()
 			Subsystem->ClearAllMappings();
 			Subsystem->AddMappingContext(DefaultMappingContext, 0);
 		}
+		else {
+			UE_LOG(LogTemp, Error, TEXT("No Subsystem for baseplayer beginplay"));
+		}
+	} 
+	else {
+		UE_LOG(LogTemp, Error, TEXT("No PlayerController for baseplayer beginplay"));
 	}
 }
