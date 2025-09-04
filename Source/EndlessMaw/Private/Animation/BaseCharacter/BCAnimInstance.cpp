@@ -20,6 +20,33 @@ void UBCAnimInstance::NativeUpdateAnimation(float DeltaSeconds)
 	}
 }
 
+void UBCAnimInstance::DeathEnded()
+{
+	OnDeathEnded.Broadcast();
+}
+
 void UBCAnimInstance::PreviewWindowUpdate_Implementation()
 {
+	if (DebugHurt) {
+		HurtAnimation();
+		DebugHurt = !DebugHurt;
+	}
+	if (DebugDeath) {
+		DeathAnimation();
+		DebugDeath = !DebugDeath;
+	}
+}
+
+void UBCAnimInstance::HurtAnimation_Implementation()
+{
+}
+
+void UBCAnimInstance::DeathAnimation_Implementation()
+{
+	if (DeathSequence) {
+		FTimerHandle deathtime;
+		// set timer to broadcast DeathEnded() at end of animation
+		GetWorld()->GetTimerManager().SetTimer(deathtime, this, 
+			&UBCAnimInstance::DeathEnded, DeathSequence->GetPlayLength());
+	}
 }

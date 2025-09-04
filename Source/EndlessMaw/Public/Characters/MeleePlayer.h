@@ -13,5 +13,10 @@ UCLASS()
 class ENDLESSMAW_API AMeleePlayer : public ABasePlayer
 {
 	GENERATED_BODY()
+	virtual void LightAttack(const FInputActionValue& value) override;
+	virtual void HeavyAttack(const FInputActionValue& value) override;
+	virtual void AlternateAttack(const FInputActionValue& value) override;
 	
+protected:
+	AMeleePlayer();
 };

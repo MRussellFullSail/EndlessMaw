@@ -12,7 +12,8 @@
 
 
 ABasePlayer::ABasePlayer()
-	:bCanQueueNextAttack(false), RotateRate(500.f), MaxWalk(600.f), MinAnalog(20.f), CameraBoomLength(400.f)
+	:bCanQueueNextAttack(true), RotateRate(500.f), MaxWalk(600.f), MinAnalog(20.f), 
+	CameraBoomLength(400.f), isAttacking(false)
 {
 	PrimaryActorTick.bStartWithTickEnabled = false;
 	// Set size for collision capsule
@@ -59,6 +60,18 @@ void ABasePlayer::Look(const FInputActionValue& Value)
 	}
 }
 
+void ABasePlayer::LightAttack(const FInputActionValue& value)
+{
+}
+
+void ABasePlayer::HeavyAttack(const FInputActionValue& value)
+{
+}
+
+void ABasePlayer::AlternateAttack(const FInputActionValue& value)
+{
+}
+
 void ABasePlayer::Move(const FInputActionValue& Value)
 {
 	FVector2D moveVector = Value.Get<FVector2D>();
@@ -86,6 +99,9 @@ void ABasePlayer::SetupPlayerInputComponent(UInputComponent* PlayerInputComponen
 	if (UEnhancedInputComponent* input = CastChecked<UEnhancedInputComponent>(PlayerInputComponent)) {
 		input->BindAction(MoveAction, ETriggerEvent::Triggered, this, &ABasePlayer::Move);
 		input->BindAction(LookAction, ETriggerEvent::Triggered, this, &ABasePlayer::Look);
+		input->BindAction(LightAttackAction, ETriggerEvent::Triggered, this, &ABasePlayer::LightAttack);
+		input->BindAction(HeavyAttackAction, ETriggerEvent::Triggered, this, &ABasePlayer::HeavyAttack);
+		input->BindAction(AlternateAttackAction, ETriggerEvent::Triggered, this, &ABasePlayer::AlternateAttack);
 	}
 	else {
 		UE_LOG(LogTemp, Error, TEXT("Failed input castcheck for baseplayer setupplayerinputcomponent"));

@@ -22,6 +22,13 @@ protected:
 
 	class UBCAnimInstance* AnimInstance;
 
+	// handle hurt animation
+	UFUNCTION()
+	virtual void HandleHurt(float percent);
+	// handle death animation
+	UFUNCTION()
+	virtual void HandleDeathStart();
+
 public:	
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;

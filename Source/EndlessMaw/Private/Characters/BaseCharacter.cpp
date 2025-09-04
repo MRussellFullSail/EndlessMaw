@@ -17,7 +17,21 @@ ABaseCharacter::ABaseCharacter()
 void ABaseCharacter::BeginPlay()
 {
 	Super::BeginPlay();
-	
+	AnimInstance = Cast<UBCAnimInstance>(GetMesh()->GetAnimInstance());
+	if (!AnimInstance) {
+		UE_LOG(LogTemp, Error, TEXT("basecharacter failed to get anim instance"));
+		Destroy();
+	}
+}
+
+void ABaseCharacter::HandleHurt(float percent)
+{
+	AnimInstance->HurtAnimation();
+}
+
+void ABaseCharacter::HandleDeathStart()
+{
+	AnimInstance->DeathAnimation();
 }
 
 // Called every frame
