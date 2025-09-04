@@ -52,7 +52,11 @@ public:
 	UFUNCTION(BluePrintNativeEvent, BlueprintCallable)
 	void DeathAnimation();
 	virtual void DeathAnimation_Implementation();
+
 	// on death ended delegate
 	UPROPERTY(BlueprintAssignable)
 	FOnAnimation OnDeathEnded;
+	// when our action is finished
+	UPROPERTY(BlueprintAssignable)
+	FOnAnimation OnActionEnded;
 };
