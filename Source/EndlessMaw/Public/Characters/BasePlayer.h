@@ -13,9 +13,9 @@ UCLASS()
 class ENDLESSMAW_API ABasePlayer : public ABaseCharacter
 {
 	GENERATED_BODY()
-	ABasePlayer();
 
 protected:
+	ABasePlayer();
 	// wasd movement
 	void Move(const struct FInputActionValue& Value);
 	// look with mouse x
@@ -29,6 +29,8 @@ protected:
 	class UCameraComponent* FollowCamera;
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Camera")
 	class USpringArmComponent* CameraBoom;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Camera")
+	float CameraBoomLength;
 
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Input")
 	class UInputMappingContext* DefaultMappingContext;
@@ -42,4 +44,14 @@ protected:
 	UInputAction* HeavyAttack;
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Input")
 	UInputAction* AlternateAttack;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Movement")
+	float MaxWalk;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Movement")
+	float MinAnalog;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Movement")
+	float RotateRate;
+
+public:
+	bool bCanQueueNextAttack;
 };
