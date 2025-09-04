@@ -4,10 +4,11 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/Character.h"
+#include "Interfaces/PickupInterface.h"
 #include "BaseCharacter.generated.h"
 
 UCLASS()
-class ENDLESSMAW_API ABaseCharacter : public ACharacter
+class ENDLESSMAW_API ABaseCharacter : public ACharacter, public IPickupInterface
 {
 	GENERATED_BODY()
 
@@ -20,7 +21,11 @@ protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
 
+	// our anim instance
 	class UBCAnimInstance* AnimInstance;
+	// our health component
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	class UAC_Health* HealthComponent;
 
 	// handle hurt animation
 	UFUNCTION()
@@ -35,5 +40,10 @@ public:
 
 	// Called to bind functionality to input
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
+
+	// ~Begin IPickupInterface
+	virtual bool CanPickupDamage() const override { return false; }
+	virtual bool CanPickupHealth() const override { return false; }
+	// ~End IPickupInterface
 
 };

@@ -67,4 +67,7 @@ public:
 
 	// player delegate for their death
 	FPlayerDelegate OnPlayerDeath;
+
+	virtual bool CanPickupHealth() const override { return true; }
+	virtual bool CanPickupDamage() const override { return true; }
 };

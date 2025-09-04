@@ -3,6 +3,7 @@
 
 #include "Characters/BaseCharacter.h"
 #include "Animation/BaseCharacter/BCAnimInstance.h"
+#include "Components/AC_Health.h"
 
 
 // Sets default values
@@ -22,6 +23,11 @@ void ABaseCharacter::BeginPlay()
 		UE_LOG(LogTemp, Error, TEXT("basecharacter failed to get anim instance"));
 		Destroy();
 	}
+	if (!HealthComponent) {
+		UE_LOG(LogTemp, Error, TEXT("basecharacter, !HealthComponent"))
+	}
+	HealthComponent->OnHurt.AddDynamic(this, &ABaseCharacter::HandleHurt);
+	HealthComponent->OnDeath.AddDynamic(this, &ABaseCharacter::HandleDeathStart);
 }
 
 void ABaseCharacter::HandleHurt(float percent)

@@ -17,6 +17,8 @@ class ENDLESSMAW_API UAC_Health : public UActorComponent
 	UPROPERTY(VisibleAnywhere)
 	float CurrentHealth;
 
+	void HandleDamage(AActor* DamagedActor, float Damage, const class UDamageType* DamageType, class AController* InstigatedBy, AActor* DamageCauser);
+
 public:	
 	// Sets default values for this component's properties
 	UAC_Health();
