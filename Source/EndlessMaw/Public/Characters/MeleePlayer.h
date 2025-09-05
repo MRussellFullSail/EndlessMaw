@@ -19,4 +19,8 @@ class ENDLESSMAW_API AMeleePlayer : public ABasePlayer
 	
 protected:
 	AMeleePlayer();
+	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
+
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Montage")
+	UAnimMontage* LightAttackMontage;
 };
