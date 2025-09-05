@@ -12,6 +12,9 @@ ABaseCharacter::ABaseCharacter()
  	// Set this character to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
 	PrimaryActorTick.bStartWithTickEnabled = false;
+	HealthComponent = CreateDefaultSubobject<UAC_Health>(TEXT("Health Component"));
+	GetMesh()->SetRelativeRotation(FRotator(0.0, -90.0, 0.0));
+	GetMesh()->SetRelativeLocation(FVector(0.0, 0.0, -90.0));
 }
 
 // Called when the game starts or when spawned
@@ -22,12 +25,18 @@ void ABaseCharacter::BeginPlay()
 	if (!AnimInstance) {
 		UE_LOG(LogTemp, Error, TEXT("basecharacter failed to get anim instance"));
 		Destroy();
+		return;
 	}
-	if (!HealthComponent) {
-		UE_LOG(LogTemp, Error, TEXT("basecharacter, !HealthComponent"))
+	if (HealthComponent) {
+		HealthComponent->OnHurt.AddDynamic(this, &ABaseCharacter::HandleHurt);
+		HealthComponent->OnDeath.AddDynamic(this, &ABaseCharacter::HandleDeathStart);
 	}
-	HealthComponent->OnHurt.AddDynamic(this, &ABaseCharacter::HandleHurt);
-	HealthComponent->OnDeath.AddDynamic(this, &ABaseCharacter::HandleDeathStart);
+	else {
+		UE_LOG(LogTemp, Error, TEXT("basecharacter, !HealthComponent"));
+		Destroy();
+		return;
+	}
+
 }
 
 void ABaseCharacter::HandleHurt(float percent)

@@ -24,7 +24,7 @@ protected:
 	// our anim instance
 	class UBCAnimInstance* AnimInstance;
 	// our health component
-	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Health")
 	class UAC_Health* HealthComponent;
 
 	// handle hurt animation
