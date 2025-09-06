@@ -42,5 +42,6 @@ public:
 	FOnHealth OnHeal;
 	// received damage
 	FOnHealth OnHurt;
-		
+	
+	void IncreaseMaxHealth(int amount);
 };
