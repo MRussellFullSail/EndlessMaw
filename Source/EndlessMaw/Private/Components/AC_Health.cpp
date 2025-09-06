@@ -48,3 +48,8 @@ void UAC_Health::TickComponent(float DeltaTime, ELevelTick TickType, FActorCompo
 	
 }
 
+void UAC_Health::IncreaseMaxHealth(int amount)
+{
+	MaxHealth += amount;
+}
+

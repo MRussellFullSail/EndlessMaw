@@ -25,16 +25,20 @@ protected:
 
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Defaults")
 	float Velocity = 0.0f;
-
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Defaults")
 	float Direction = 0.0f;
-
-	UPROPERTY(BlueprintReadWrite, EditAnywhere)
-	FName SlotName = "Action";
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Defaults")
+	bool CanMove = true;
 
 	// sequence bases
+	UPROPERTY(BlueprintReadWrite, EditAnywhere)
+	FName SlotName = "Action";
 	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite)
-	UAnimSequenceBase* DeathSequence;
+	UAnimSequenceBase* CurrentDeathAsset;
+	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite)
+	UAnimSequenceBase* HurtAsset;
+	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite)
+	TArray<UAnimSequenceBase*> DeathAssetArray;
 
 	// preview window debugging
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
@@ -59,4 +63,14 @@ public:
 	// when our action is finished
 	UPROPERTY(BlueprintAssignable)
 	FOnAnimation OnActionEnded;
+
+	// start of the attack to turn on collider, use notify state to broadcast
+	UPROPERTY(BlueprintAssignable)
+	FOnAnimation OnDamageWindowStart;
+	// end of the attack
+	UPROPERTY(BlueprintAssignable)
+	FOnAnimation OnDamageWindowEnd;
+
+	// set wether or not we should be able to move, can be linked to notify state, or called directly
+	void SetMoveable(bool ShouldMove);
 };

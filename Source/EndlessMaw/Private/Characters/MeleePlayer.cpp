@@ -36,3 +36,7 @@ void AMeleePlayer::SetupPlayerInputComponent(UInputComponent* PlayerInputCompone
 	Super::SetupPlayerInputComponent(PlayerInputComponent);
 }
 
+void AMeleePlayer::BeginPlay()
+{
+}
+

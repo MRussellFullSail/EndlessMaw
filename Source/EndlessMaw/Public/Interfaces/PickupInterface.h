@@ -24,4 +24,5 @@ class ENDLESSMAW_API IPickupInterface
 public:
 	virtual bool CanPickupHealth() const = 0;
 	virtual bool CanPickupDamage() const = 0;
+	virtual bool CanPickupMaxHealth() const = 0;
 };

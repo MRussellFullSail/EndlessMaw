@@ -39,14 +39,29 @@ void UBCAnimInstance::PreviewWindowUpdate_Implementation()
 
 void UBCAnimInstance::HurtAnimation_Implementation()
 {
+	if (HurtAsset) {
+		if (!IsAnyMontagePlaying()) {
+			PlaySlotAnimationAsDynamicMontage(HurtAsset, SlotName);
+		}
+	}
 }
 
 void UBCAnimInstance::DeathAnimation_Implementation()
 {
-	if (DeathSequence) {
+	int index = FMath::RandHelper(DeathAssetArray.Num());
+	if (DeathAssetArray.IsValidIndex(index)) {
+		CurrentDeathAsset = DeathAssetArray[index];
+	}
+	if (CurrentDeathAsset) {
+		// if CurrentDeathAsset !=nulltr is the tranisiton rule, set it as output pose in state
 		FTimerHandle deathtime;
 		// set timer to broadcast DeathEnded() at end of animation
 		GetWorld()->GetTimerManager().SetTimer(deathtime, this, 
-			&UBCAnimInstance::DeathEnded, DeathSequence->GetPlayLength());
+			&UBCAnimInstance::DeathEnded, CurrentDeathAsset->GetPlayLength());
 	}
+}
+
+void UBCAnimInstance::SetMoveable(bool ShouldMove)
+{
+	CanMove = ShouldMove;
 }

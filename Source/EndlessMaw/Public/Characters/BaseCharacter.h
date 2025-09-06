@@ -44,6 +44,7 @@ public:
 	// ~Begin IPickupInterface
 	virtual bool CanPickupDamage() const override { return false; }
 	virtual bool CanPickupHealth() const override { return false; }
+	virtual bool CanPickupMaxHealth() const override { return false; }
 	// ~End IPickupInterface
 
 };
