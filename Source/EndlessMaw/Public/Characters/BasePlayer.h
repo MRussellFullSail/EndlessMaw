@@ -4,6 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "Characters/BaseCharacter.h"
+#include "Enum/ComboEnum.h"
 #include "BasePlayer.generated.h"
 
 DECLARE_DYNAMIC_MULTICAST_DELEGATE(FPlayerDelegate);
@@ -59,11 +60,24 @@ protected:
 
 	bool bCanQueueNextAttack;
 	bool isAttacking;
+	FName MontageSection;
+	EComboType Combo;
+
 public:
 	// can the player start the next attack
 	inline bool CanQueueNextAttack() const { return bCanQueueNextAttack; }
+	// set the player to be able to queue the next attack
+	void SetQueueNextAttack(bool canqueue);
 	// is player currently attacking
 	inline bool IsAttacking() const { return isAttacking; }
+	// set the name of the section of the anim montage
+	void SetMontageSection(FName section);
+	// get the name of the current section of the anim montage
+	inline FName GetMontageSection() const { return MontageSection; }
+	// what is our current combo type heavy or light
+	inline EComboType GetComboType() const { return Combo; }
+	// set the the next combo is
+	void SetComboType(EComboType type);
 
 	// player delegate for their death
 	FPlayerDelegate OnPlayerDeath;
