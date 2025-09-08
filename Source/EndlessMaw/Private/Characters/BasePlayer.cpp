@@ -12,8 +12,7 @@
 
 
 ABasePlayer::ABasePlayer()
-	:bCanQueueNextAttack(true), RotateRate(500.f), MaxWalk(600.f), MinAnalog(20.f), 
-	CameraBoomLength(400.f), isAttacking(false), MontageSection(NAME_None)
+	:RotateRate(500.f), MaxWalk(600.f), MinAnalog(20.f), CameraBoomLength(400.f)
 {
 	PrimaryActorTick.bStartWithTickEnabled = false;
 	// Set size for collision capsule
@@ -74,7 +73,7 @@ void ABasePlayer::AlternateAttack(const FInputActionValue& value)
 
 void ABasePlayer::Move(const FInputActionValue& Value)
 {
-	UE_LOG(LogTemp, Warning, TEXT("player move"));
+	if (!ShouldMove()) return;
 	FVector2D moveVector = Value.Get<FVector2D>();
 	if (Controller != nullptr)
 	{
@@ -130,21 +129,4 @@ void ABasePlayer::BeginPlay()
 	if (!AnimInstance) {
 		UE_LOG(LogTemp, Error, TEXT("BasePlayer !AnimInstance"));
 	}
-}
-
-void ABasePlayer::SetQueueNextAttack(bool canqueue)
-{
-	UE_LOG(LogTemp, Warning, TEXT("baseplayer calling setqueuenextattack"));
-	bCanQueueNextAttack = canqueue;
-}
-
-void ABasePlayer::SetMontageSection(FName section)
-{
-	UE_LOG(LogTemp, Warning, TEXT("baseplayer calling setmontagesection"));
-	MontageSection = section;
-}
-
-void ABasePlayer::SetComboType(EComboType type)
-{
-	Combo = type;
 }

@@ -8,6 +8,7 @@
 
 // Sets default values
 ABaseCharacter::ABaseCharacter()
+	:bCanQueueNextAttack(true), isAttacking(false), MontageSection(NAME_None)
 {
  	// Set this character to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
@@ -63,3 +64,22 @@ void ABaseCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputCompo
 
 }
 
+void ABaseCharacter::SetQueueNextAttack(bool canqueue)
+{
+	bCanQueueNextAttack = canqueue;
+}
+
+bool ABaseCharacter::ShouldMove() const
+{
+	return !isAttacking && !AnimInstance->IsAnyMontagePlaying();
+}
+
+void ABaseCharacter::SetMontageSection(FName section)
+{
+	MontageSection = section;
+}
+
+void ABaseCharacter::SetComboType(EComboType type)
+{
+	Combo = type;
+}

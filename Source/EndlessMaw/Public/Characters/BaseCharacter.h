@@ -5,6 +5,7 @@
 #include "CoreMinimal.h"
 #include "GameFramework/Character.h"
 #include "Interfaces/PickupInterface.h"
+#include "Enum/ComboEnum.h"
 #include "BaseCharacter.generated.h"
 
 UCLASS()
@@ -27,6 +28,9 @@ protected:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Health")
 	class UAC_Health* HealthComponent;
 
+	bool bCanQueueNextAttack;
+	FName MontageSection;
+	EComboType Combo;
 	// handle hurt animation
 	UFUNCTION()
 	virtual void HandleHurt(float percent);
@@ -35,6 +39,8 @@ protected:
 	virtual void HandleDeathStart();
 
 public:	
+	bool isAttacking;
+
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
 
@@ -47,4 +53,20 @@ public:
 	virtual bool CanPickupMaxHealth() const override { return false; }
 	// ~End IPickupInterface
 
+	// can the player start the next attack
+	inline bool CanQueueNextAttack() const { return bCanQueueNextAttack; }
+	// set the player to be able to queue the next attack
+	void SetQueueNextAttack(bool canqueue);
+	// is player currently attacking
+	inline bool IsAttacking() const { return isAttacking; }
+	// should we be allowed to move
+	bool ShouldMove() const;
+	// set the name of the section of the anim montage
+	void SetMontageSection(FName section);
+	// get the name of the current section of the anim montage
+	inline FName GetMontageSection() const { return MontageSection; }
+	// what is our current combo type heavy or light
+	inline EComboType GetComboType() const { return Combo; }
+	// set the the next combo is
+	void SetComboType(EComboType type);
 };
