@@ -3,6 +3,7 @@
 
 #include "Characters/MeleePlayer.h"
 #include "Animation/BaseCharacter/BCAnimInstance.h"
+#include "Components/SkeletalMeshComponent.h"
 
 
 void AMeleePlayer::LightAttack(const FInputActionValue& value)
@@ -54,5 +55,9 @@ void AMeleePlayer::BeginPlay()
 	if (!AnimInstance) {
 		UE_LOG(LogTemp, Warning, TEXT("melee has no animinstance"));
 	}
+	if (!MovementInstance) {
+		UE_LOG(LogTemp, Warning, TEXT("melee has no movement"));
+	}
+	GetMesh()->LinkAnimClassLayers(MovementInstance);
 }
 
