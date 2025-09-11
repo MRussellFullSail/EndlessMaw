@@ -4,6 +4,7 @@
 #include "Characters/MeleePlayer.h"
 #include "Animation/BaseCharacter/BCAnimInstance.h"
 #include "Components/SkeletalMeshComponent.h"
+#include "Weapons/OneHandWeapon.h"
 
 
 void AMeleePlayer::LightAttack(const FInputActionValue& value)
@@ -59,5 +60,14 @@ void AMeleePlayer::BeginPlay()
 		UE_LOG(LogTemp, Warning, TEXT("melee has no movement"));
 	}
 	GetMesh()->LinkAnimClassLayers(MovementInstance);
+
+	if (IsValid(BaseWeapon)) {
+		AOneHandWeapon* sword = NewObject<AOneHandWeapon>(GetWorld(), BaseWeapon);
+		if (sword) {
+			sword->SetOwner(this);
+			sword->AttachToComponent(GetMesh(), FAttachmentTransformRules::SnapToTargetIncludingScale,
+				MainWeaponSocket);
+		}
+	}
 }
 

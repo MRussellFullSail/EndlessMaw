@@ -4,6 +4,7 @@
 #include "Characters/BaseCharacter.h"
 #include "Animation/BaseCharacter/BCAnimInstance.h"
 #include "Components/AC_Health.h"
+#include "Weapons/BaseWeapon.h"
 
 
 // Sets default values
@@ -16,6 +17,7 @@ ABaseCharacter::ABaseCharacter()
 	HealthComponent = CreateDefaultSubobject<UAC_Health>(TEXT("Health Component"));
 	GetMesh()->SetRelativeRotation(FRotator(0.0, -90.0, 0.0));
 	GetMesh()->SetRelativeLocation(FVector(0.0, 0.0, -90.0));
+
 }
 
 // Called when the game starts or when spawned

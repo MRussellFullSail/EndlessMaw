@@ -125,8 +125,13 @@ void ABasePlayer::BeginPlay()
 	} 
 	else {
 		UE_LOG(LogTemp, Error, TEXT("No PlayerController for baseplayer beginplay"));
+		Destroy();
+		return;
 	}
 	if (!AnimInstance) {
 		UE_LOG(LogTemp, Error, TEXT("BasePlayer !AnimInstance"));
+		Destroy();
+		return;
 	}
+
 }

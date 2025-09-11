@@ -38,6 +38,11 @@ protected:
 	UFUNCTION()
 	virtual void HandleDeathStart();
 
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Weapon")
+	FName MainWeaponSocket;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Weapon")
+	TSubclassOf<class ABaseWeapon> BaseWeapon;
+
 public:	
 	bool isAttacking;
 
