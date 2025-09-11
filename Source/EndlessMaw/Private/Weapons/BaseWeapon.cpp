@@ -4,15 +4,20 @@
 #include "Weapons/BaseWeapon.h"
 #include "Components/BoxComponent.h"
 #include "Engine/DamageEvents.h"
-
+#include "Enum/ComboEnum.h"
+#include "Characters/BaseCharacter.h"
+#include "Components/SkeletalMeshComponent.h"
 
 // Sets default values
 ABaseWeapon::ABaseWeapon()
+	:LightDamage(12.f), HeavyDamage(18.f), AlternateDamage(10.f)
 {
  	// Set this actor to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
 	PrimaryActorTick.bStartWithTickEnabled = false;
 
+	Mesh = CreateDefaultSubobject<USkeletalMeshComponent>(TEXT("Mesh"));
+	SetRootComponent(Mesh);
 	Collider = CreateDefaultSubobject<UBoxComponent>(TEXT("Collider"));
 	Collider->SetupAttachment(RootComponent);
 }
@@ -23,15 +28,34 @@ void ABaseWeapon::BeginPlay()
 	Super::BeginPlay();
 	Collider->OnComponentBeginOverlap.AddDynamic(this, &ABaseWeapon::HandleOverlapBegin);
 	Collider->SetActive(false);
+
+	if (!Mesh)
+		UE_LOG(LogTemp, Error, TEXT("baseweapon !mesh"));
+	if (!Mesh->GetSkeletalMeshAsset())
+		UE_LOG(LogTemp, Error, TEXT("baseweapon !mesh->getskeletalmeshasset"));
+	Mesh->SetSkeletalMesh(meshasset);
 }
 
 void ABaseWeapon::HandleOverlapBegin(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
 {
+	ABaseCharacter* owner = Cast<ABaseCharacter>(GetOwner());
+	if (!owner) {
+		UE_LOG(LogTemp, Error, TEXT("BaseWeapon, !owner"));
+		return;
+	}
+	float damage = 0.f;
+	EComboType type = owner->GetComboType();
+	if (type == EComboType::Light)
+		damage = LightDamage;
+	if (type == EComboType::Heavy)
+		damage = HeavyDamage;
+	if (type == EComboType::Alternate)
+		damage = AlternateDamage;
 	FDamageEvent damageEvent;
-	// dont damage ourselved
-	if (OtherActor != this) {
+	// dont damage ourselves
+	if (OtherActor != Owner) {
 		// call take damage on the actor we hit
-		OtherActor->TakeDamage(10.f, damageEvent, nullptr, this->Owner);
+		OtherActor->TakeDamage(damage, damageEvent, nullptr, this->Owner);
 	}
 }
 

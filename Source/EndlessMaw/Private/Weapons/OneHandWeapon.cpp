@@ -4,6 +4,11 @@
 #include "Weapons/OneHandWeapon.h"
 #include "Components/BoxComponent.h"
 
+AOneHandWeapon::AOneHandWeapon()
+{
+
+}
+
 void AOneHandWeapon::DamageWindowOn()
 {
 	Collider->SetActive(true);

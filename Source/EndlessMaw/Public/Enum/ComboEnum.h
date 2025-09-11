@@ -10,7 +10,8 @@ UENUM()
 enum class EComboType : uint8 {
 	None	UMETA(DisplayName = "None"),
 	Light	UMETA(DisplayName = "Light"),
-	Heavy	UMETA(DisplayName = "Heavy")
+	Heavy	UMETA(DisplayName = "Heavy"),
+	Alternate	UMETA(DisplayName = "Alternate")
 };
 
 UCLASS()

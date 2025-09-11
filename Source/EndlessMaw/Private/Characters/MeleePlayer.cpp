@@ -24,6 +24,7 @@ void AMeleePlayer::LightAttack(const FInputActionValue& value)
 			AnimInstance->SetMoveable(false);
 			isAttacking = true;
 			// play the attack
+			SetComboType(EComboType::Light);
 			PlayAnimMontage(LightAttackMontage, 1.f, MontageSection);
 		}
 		else if (!AnimInstance->Montage_IsPlaying(LightAttackMontage)) { 
@@ -75,12 +76,14 @@ void AMeleePlayer::BeginPlay()
 		
 		sword = GetWorld()->SpawnActor<AOneHandWeapon>(spawn);
 		if (sword != nullptr) {
-			UE_LOG(LogTemp, Warning, TEXT("hello sword"));
 			sword->SetOwner(this);
 			sword->AttachToComponent(GetMesh(), FAttachmentTransformRules::SnapToTargetIncludingScale,
 				MainWeaponSocket);
 			AnimInstance->OnDamageWindowStart.AddDynamic(sword, &AOneHandWeapon::DamageWindowOn);
 			AnimInstance->OnDamageWindowEnd.AddDynamic(sword, &AOneHandWeapon::DamageWindowOff);
+			sword->Mesh->SetSkeletalMeshAsset(weaponmesh);
+			sword->SetActorRelativeRotation(FRotator(0, -70, 110));
+			sword->SetActorScale3D(FVector(.7, .3, .6));
 		}
 		else {
 			UE_LOG(LogTemp, Error, TEXT("MeleePlayer, !sword"));

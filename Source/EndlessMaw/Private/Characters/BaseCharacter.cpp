@@ -44,6 +44,7 @@ void ABaseCharacter::BeginPlay()
 
 void ABaseCharacter::HandleHurt(float percent)
 {
+	UE_LOG(LogTemp, Warning, TEXT("BaseCharacter HandleHurt"));
 	AnimInstance->HurtAnimation();
 }
 

@@ -33,4 +33,6 @@ protected:
 	class AOneHandWeapon* sword;
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Weapon")
 	TSubclassOf<class ABaseWeapon> base;
+	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Defaults")
+	USkeletalMesh* weaponmesh;
 };

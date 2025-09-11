@@ -6,15 +6,15 @@
 #include "Weapons/BaseWeapon.h"
 #include "OneHandWeapon.generated.h"
 
-/**
- * 
- */
+
+
 UCLASS()
 class ENDLESSMAW_API AOneHandWeapon : public ABaseWeapon
 {
 	GENERATED_BODY()
 	
 public:
+	AOneHandWeapon();
 	// turn on our collider
 	UFUNCTION()
 	void DamageWindowOn();
@@ -23,4 +23,7 @@ public:
 	void DamageWindowOff();
 
 	virtual void BeginPlay() override;
+
+protected:
+
 };
