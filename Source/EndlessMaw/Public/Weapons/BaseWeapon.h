@@ -21,13 +21,7 @@ protected:
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	class UBoxComponent* Collider;
-	// turn on our collider
-	UFUNCTION()
-	void DamageWindowOn();
-	// turn off our collider
-	UFUNCTION()
-	void DamageWindowOff();
-	// handle start of overlap
+
 	UFUNCTION()
 	void HandleOverlapBegin(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult);
 

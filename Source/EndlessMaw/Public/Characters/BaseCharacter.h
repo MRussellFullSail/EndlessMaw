@@ -41,7 +41,7 @@ protected:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Weapon")
 	FName MainWeaponSocket;
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Weapon")
-	TSubclassOf<class ABaseWeapon> BaseWeapon;
+	TSubclassOf<AActor> BaseWeapon;
 
 public:	
 	bool isAttacking;

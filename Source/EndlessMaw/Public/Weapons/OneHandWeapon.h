@@ -14,4 +14,13 @@ class ENDLESSMAW_API AOneHandWeapon : public ABaseWeapon
 {
 	GENERATED_BODY()
 	
+public:
+	// turn on our collider
+	UFUNCTION()
+	void DamageWindowOn();
+	// turn off our collider
+	UFUNCTION()
+	void DamageWindowOff();
+
+	virtual void BeginPlay() override;
 };

@@ -30,5 +30,7 @@ protected:
 	//TSubclassOf<AActor> MeleeWeapon;
 	//UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Weapon")
 	//class AOneHandWeapon* MainWeapon;
-
+	class AOneHandWeapon* sword;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Weapon")
+	TSubclassOf<class ABaseWeapon> base;
 };

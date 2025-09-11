@@ -22,22 +22,17 @@ void ABaseWeapon::BeginPlay()
 {
 	Super::BeginPlay();
 	Collider->OnComponentBeginOverlap.AddDynamic(this, &ABaseWeapon::HandleOverlapBegin);
-}
-
-void ABaseWeapon::DamageWindowOn()
-{
-	Collider->SetActive(true);
-}
-
-void ABaseWeapon::DamageWindowOff()
-{
 	Collider->SetActive(false);
 }
 
 void ABaseWeapon::HandleOverlapBegin(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
 {
 	FDamageEvent damageEvent;
-	OtherActor->TakeDamage(10.f, damageEvent, nullptr, this->Owner);
+	// dont damage ourselved
+	if (OtherActor != this) {
+		// call take damage on the actor we hit
+		OtherActor->TakeDamage(10.f, damageEvent, nullptr, this->Owner);
+	}
 }
 
 // Called every frame

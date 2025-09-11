@@ -4,6 +4,9 @@
 #include "Characters/MeleePlayer.h"
 #include "Animation/BaseCharacter/BCAnimInstance.h"
 #include "Components/SkeletalMeshComponent.h"
+
+#include "Weapons/BaseWeapon.h"
+
 #include "Weapons/OneHandWeapon.h"
 
 
@@ -60,14 +63,31 @@ void AMeleePlayer::BeginPlay()
 		UE_LOG(LogTemp, Warning, TEXT("melee has no movement"));
 	}
 	GetMesh()->LinkAnimClassLayers(MovementInstance);
-
+	if (!IsValid(base)) {
+		UE_LOG(LogTemp, Error, TEXT("!base"));
+		Destroy();
+		return;
+	}
 	if (IsValid(BaseWeapon)) {
-		AOneHandWeapon* sword = NewObject<AOneHandWeapon>(GetWorld(), BaseWeapon);
-		if (sword) {
+		//sword = Cast<AOneHandWeapon>(BaseWeapon);
+		//sword = NewObject<AOneHandWeapon>(GetWorld(), base);
+		FActorSpawnParameters spawn;
+		
+		sword = GetWorld()->SpawnActor<AOneHandWeapon>(spawn);
+		if (sword != nullptr) {
+			UE_LOG(LogTemp, Warning, TEXT("hello sword"));
 			sword->SetOwner(this);
 			sword->AttachToComponent(GetMesh(), FAttachmentTransformRules::SnapToTargetIncludingScale,
 				MainWeaponSocket);
+			AnimInstance->OnDamageWindowStart.AddDynamic(sword, &AOneHandWeapon::DamageWindowOn);
+			AnimInstance->OnDamageWindowEnd.AddDynamic(sword, &AOneHandWeapon::DamageWindowOff);
 		}
+		else {
+			UE_LOG(LogTemp, Error, TEXT("MeleePlayer, !sword"));
+		}
+	}
+	else {
+		UE_LOG(LogTemp, Error, TEXT("MeleePlayer, !BaseWeapon"));
 	}
 }
 

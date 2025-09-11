@@ -10,11 +10,17 @@ void UAttackNotifyState::NotifyBegin(USkeletalMeshComponent* meshComp, UAnimSequ
 	if (UBCAnimInstance* animInst = Cast<UBCAnimInstance>(meshComp->GetAnimInstance())) {
 		animInst->OnDamageWindowStart.Broadcast();
 	}
+	else {
+		UE_LOG(LogTemp, Warning, TEXT("AttackNotifyState NotifyBegin, !AnimInstance"));
+	}
 }
 
 void UAttackNotifyState::NotifyEnd(USkeletalMeshComponent* meshComp, UAnimSequenceBase* animation)
 {
 	if (UBCAnimInstance* animInst = Cast<UBCAnimInstance>(meshComp->GetAnimInstance())) {
 		animInst->OnDamageWindowEnd.Broadcast();
+	}
+	else {
+		UE_LOG(LogTemp, Warning, TEXT("AttackNotifyState NotifyEnd, !AnimInstance"));
 	}
 }

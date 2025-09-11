@@ -2,4 +2,19 @@
 
 
 #include "Weapons/OneHandWeapon.h"
+#include "Components/BoxComponent.h"
 
+void AOneHandWeapon::DamageWindowOn()
+{
+	Collider->SetActive(true);
+}
+
+void AOneHandWeapon::DamageWindowOff()
+{
+	Collider->SetActive(false);
+}
+
+void AOneHandWeapon::BeginPlay()
+{
+	Super::BeginPlay();
+}
