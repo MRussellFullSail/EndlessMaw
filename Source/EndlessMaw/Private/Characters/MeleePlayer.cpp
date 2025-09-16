@@ -72,8 +72,8 @@ void AMeleePlayer::BeginPlay()
 	if (IsValid(BaseWeapon)) {
 		//sword = Cast<AOneHandWeapon>(BaseWeapon);
 		//sword = NewObject<AOneHandWeapon>(GetWorld(), base);
+
 		FActorSpawnParameters spawn;
-		
 		sword = GetWorld()->SpawnActor<AOneHandWeapon>(spawn);
 		if (sword != nullptr) {
 			sword->SetOwner(this);

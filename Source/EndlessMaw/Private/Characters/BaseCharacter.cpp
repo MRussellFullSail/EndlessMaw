@@ -12,7 +12,7 @@ ABaseCharacter::ABaseCharacter()
 	:bCanQueueNextAttack(true), isAttacking(false), MontageSection(NAME_None)
 {
  	// Set this character to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
-	PrimaryActorTick.bCanEverTick = true;
+	PrimaryActorTick.bCanEverTick = false;
 	PrimaryActorTick.bStartWithTickEnabled = false;
 	HealthComponent = CreateDefaultSubobject<UAC_Health>(TEXT("Health Component"));
 	GetMesh()->SetRelativeRotation(FRotator(0.0, -90.0, 0.0));
@@ -44,20 +44,12 @@ void ABaseCharacter::BeginPlay()
 
 void ABaseCharacter::HandleHurt(float percent)
 {
-	UE_LOG(LogTemp, Warning, TEXT("BaseCharacter HandleHurt"));
 	AnimInstance->HurtAnimation();
 }
 
 void ABaseCharacter::HandleDeathStart()
 {
 	AnimInstance->DeathAnimation();
-}
-
-// Called every frame
-void ABaseCharacter::Tick(float DeltaTime)
-{
-	Super::Tick(DeltaTime);
-
 }
 
 // Called to bind functionality to input
