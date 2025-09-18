@@ -13,6 +13,17 @@ UBTT_EnemyAttack::UBTT_EnemyAttack()
 
 EBTNodeResult::Type UBTT_EnemyAttack::ExecuteTask(UBehaviorTreeComponent& OwnerComp, uint8* NodeMemory)
 {
+	UE_LOG(LogTemp, Warning, TEXT("BTT_EnemyAttack"));
+	AAIC_Enemy* controller = Cast<AAIC_Enemy>(OwnerComp.GetAIOwner());
+	if (!controller) {
+		UE_LOG(LogTemp, Error, TEXT("BTT_EnemyAttack, No Controller"));
+		return EBTNodeResult::Failed;
+	}
+	APawn* pawn = controller->GetPawn();
+	if (!pawn) {
+		UE_LOG(LogTemp, Error, TEXT("BTT_EnemyAttack, No Pawn"));
+		return EBTNodeResult::Failed;
+	}
 	IEnemyInterface* EnemyInterface = Cast<IEnemyInterface>(OwnerComp.GetAIOwner()->GetPawn());
 	if (EnemyInterface) {
 		EnemyInterface->DetermineAttack();

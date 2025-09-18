@@ -71,6 +71,9 @@ public:
 	UPROPERTY(BlueprintAssignable)
 	FOnAnimation OnDamageWindowEnd;
 
+	UPROPERTY(BlueprintAssignable)
+	FOnAnimation OnEndOfMontage;
+
 	// set wether or not we should be able to move, can be linked to notify state, or called directly
 	void SetMoveable(bool ShouldMove);
 };

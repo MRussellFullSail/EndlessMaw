@@ -10,6 +10,7 @@
 
 void AAIC_Enemy::HandlePerception(AActor* actor, FAIStimulus stimulus)
 {
+	UE_LOG(LogTemp, Warning, TEXT("AIC_Handle Percption"));
 	OnPerception.Broadcast(actor, stimulus);
 }
 
@@ -37,6 +38,12 @@ void AAIC_Enemy::OnPossess(APawn* pawn)
 	}
 	// register our config
 	if (Sight && Perception) {
+		Sight->LoseSightRadius = 1000;
+		Sight->PeripheralVisionAngleDegrees = 45;
+		Sight->SightRadius = 800;
+		Sight->DetectionByAffiliation.bDetectEnemies = true;
+		Sight->DetectionByAffiliation.bDetectFriendlies = false;
+		Sight->DetectionByAffiliation.bDetectNeutrals = true;
 		Perception->ConfigureSense(*Sight);
 	}
 	else {
