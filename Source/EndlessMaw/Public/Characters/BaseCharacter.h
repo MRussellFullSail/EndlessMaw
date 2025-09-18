@@ -21,6 +21,7 @@ public:
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
+	virtual void EndPlay(const EEndPlayReason::Type Reason) override;
 
 	// our anim instance
 	class UBCAnimInstance* AnimInstance;
@@ -37,6 +38,9 @@ protected:
 	// handle death animation
 	UFUNCTION()
 	virtual void HandleDeathStart();
+	// handle BaseCharacter death
+	UFUNCTION()
+	virtual void HandleDeath();
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Weapon")
 	FName MainWeaponSocket;
@@ -45,6 +49,7 @@ protected:
 
 public:	
 	bool isAttacking;
+	bool isDead;
 
 	// Called to bind functionality to input
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;

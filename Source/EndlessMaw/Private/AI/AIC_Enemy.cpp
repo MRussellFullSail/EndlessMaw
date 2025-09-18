@@ -10,7 +10,6 @@
 
 void AAIC_Enemy::HandlePerception(AActor* actor, FAIStimulus stimulus)
 {
-	UE_LOG(LogTemp, Warning, TEXT("AIC_Handle Percption"));
 	OnPerception.Broadcast(actor, stimulus);
 }
 

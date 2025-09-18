@@ -39,14 +39,11 @@ protected:
 
 	// handle our hurt
 	virtual void HandleHurt(float health) override;
-	// handle the end of our death
+	// handle BaseEnemy death
+	virtual void HandleDeath() override;
+
 	UFUNCTION()
-	void HandleDeath();
-	// handle action being completed
-	UFUNCTION()
-	void HandleActionFinished();
-	UFUNCTION()
-	void HandleMontageFinished();
+	void HandleMontageFinished(UAnimMontage* montage, bool bInterrupted);
 
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Montage")
 	UAnimMontage* LightAttackMontage;

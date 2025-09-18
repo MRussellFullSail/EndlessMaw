@@ -57,7 +57,8 @@ protected:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Movement")
 	float RotateRate;
 
-
+	// handle BasePlayer death
+	virtual void HandleDeath() override;
 
 public:
 	

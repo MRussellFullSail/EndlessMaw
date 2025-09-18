@@ -13,7 +13,6 @@ UBTT_EnemyAttack::UBTT_EnemyAttack()
 
 EBTNodeResult::Type UBTT_EnemyAttack::ExecuteTask(UBehaviorTreeComponent& OwnerComp, uint8* NodeMemory)
 {
-	UE_LOG(LogTemp, Warning, TEXT("BTT_EnemyAttack"));
 	AAIC_Enemy* controller = Cast<AAIC_Enemy>(OwnerComp.GetAIOwner());
 	if (!controller) {
 		UE_LOG(LogTemp, Error, TEXT("BTT_EnemyAttack, No Controller"));
@@ -29,9 +28,6 @@ EBTNodeResult::Type UBTT_EnemyAttack::ExecuteTask(UBehaviorTreeComponent& OwnerC
 		EnemyInterface->DetermineAttack();
 		WaitForMessage(OwnerComp, FinishMessage);
 		return EBTNodeResult::InProgress;
-	}
-	else {
-		UE_LOG(LogTemp, Error, TEXT("No EnemyInterface for BTT_EnemyAttack"));
 	}
 	return EBTNodeResult::Failed;
 }

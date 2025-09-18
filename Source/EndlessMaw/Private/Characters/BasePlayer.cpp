@@ -9,6 +9,8 @@
 #include "GameFramework/SpringArmComponent.h"
 #include "Camera/CameraComponent.h"
 #include "Components/CapsuleComponent.h"
+#include "Animation/BaseCharacter/BCAnimInstance.h"
+#include "Components/AC_Health.h"
 
 
 ABasePlayer::ABasePlayer()
@@ -128,10 +130,19 @@ void ABasePlayer::BeginPlay()
 		Destroy();
 		return;
 	}
-	if (!AnimInstance) {
+	if (AnimInstance) {
+
+	}
+	else {
 		UE_LOG(LogTemp, Error, TEXT("BasePlayer !AnimInstance"));
 		Destroy();
 		return;
 	}
 
+}
+
+void ABasePlayer::HandleDeath()
+{
+	OnPlayerDeath.Broadcast();
+	Super::HandleDeath();
 }
