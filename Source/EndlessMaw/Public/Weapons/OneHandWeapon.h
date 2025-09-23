@@ -15,11 +15,8 @@ class ENDLESSMAW_API AOneHandWeapon : public ABaseWeapon
 	
 public:
 	AOneHandWeapon();
-	// turn on our collider
-	UFUNCTION()
+
 	void DamageWindowOn();
-	// turn off our collider
-	UFUNCTION()
 	void DamageWindowOff();
 
 	virtual void BeginPlay() override;

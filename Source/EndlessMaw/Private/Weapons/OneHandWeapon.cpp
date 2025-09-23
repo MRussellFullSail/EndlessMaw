@@ -6,20 +6,22 @@
 
 AOneHandWeapon::AOneHandWeapon()
 {
-
+	
 }
 
 void AOneHandWeapon::DamageWindowOn()
 {
-	Collider->SetActive(true);
+	Super::DamageWindowOn();
 }
 
 void AOneHandWeapon::DamageWindowOff()
 {
-	Collider->SetActive(false);
+	Super::DamageWindowOff();
 }
 
 void AOneHandWeapon::BeginPlay()
 {
 	Super::BeginPlay();
+	if (!Mesh)
+		UE_LOG(LogTemp, Error, TEXT("AOneHandWeapon, !Mesh"));
 }

@@ -4,7 +4,6 @@
 #include "Characters/BaseCharacter.h"
 #include "Animation/BaseCharacter/BCAnimInstance.h"
 #include "Components/AC_Health.h"
-#include "Weapons/BaseWeapon.h"
 #include "GameFramework/CharacterMovementComponent.h"
 
 

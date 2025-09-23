@@ -25,8 +25,7 @@ protected:
 public:
 	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Defaults")
 	USkeletalMeshComponent* Mesh;
-	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Defaults")
-	USkeletalMesh* meshasset;
+
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Damage")
 	float LightDamage;
@@ -35,8 +34,16 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Damage")
 	float AlternateDamage;
 
+	// box collider OnComponentBeginOverlap where our damage is applied
 	UFUNCTION()
-	void HandleOverlapBegin(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult);
+	void HandleOverlapBegin(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, 
+		UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult);
+	// turn on our collider
+	UFUNCTION()
+	void DamageWindowOn();
+	// turn off our collider
+	UFUNCTION()
+	void DamageWindowOff();
 
 private:
 	float CurrentDamage;

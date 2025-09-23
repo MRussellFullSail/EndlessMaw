@@ -3,9 +3,6 @@
 
 #include "Characters/MeleePlayer.h"
 #include "Animation/BaseCharacter/BCAnimInstance.h"
-#include "Components/SkeletalMeshComponent.h"
-
-#include "Weapons/BaseWeapon.h"
 
 #include "Weapons/OneHandWeapon.h"
 
@@ -27,7 +24,7 @@ void AMeleePlayer::LightAttack(const FInputActionValue& value)
 			SetComboType(EComboType::Light);
 			PlayAnimMontage(LightAttackMontage, 1.f, MontageSection);
 		}
-		else if (!AnimInstance->Montage_IsPlaying(LightAttackMontage)) { 
+		else if (!AnimInstance->Montage_IsPlaying(LightAttackMontage)) {
 			// we cant attack but no montage is playing reset, to the opener
 			AnimInstance->Montage_JumpToSection(FName("Opener"), LightAttackMontage);
 		}
@@ -64,33 +61,21 @@ void AMeleePlayer::BeginPlay()
 		UE_LOG(LogTemp, Warning, TEXT("melee has no movement"));
 	}
 	GetMesh()->LinkAnimClassLayers(MovementInstance);
-	if (!IsValid(base)) {
-		UE_LOG(LogTemp, Error, TEXT("!base"));
-		Destroy();
-		return;
-	}
-	if (IsValid(BaseWeapon)) {
-		//sword = Cast<AOneHandWeapon>(BaseWeapon);
-		//sword = NewObject<AOneHandWeapon>(GetWorld(), base);
 
-		FActorSpawnParameters spawn;
-		sword = GetWorld()->SpawnActor<AOneHandWeapon>(spawn);
-		if (sword != nullptr) {
-			sword->SetOwner(this);
-			sword->AttachToComponent(GetMesh(), FAttachmentTransformRules::SnapToTargetIncludingScale,
-				MainWeaponSocket);
-			AnimInstance->OnDamageWindowStart.AddDynamic(sword, &AOneHandWeapon::DamageWindowOn);
-			AnimInstance->OnDamageWindowEnd.AddDynamic(sword, &AOneHandWeapon::DamageWindowOff);
-			sword->Mesh->SetSkeletalMeshAsset(weaponmesh);
-			sword->SetActorRelativeRotation(FRotator(0, -70, 110));
-			sword->SetActorScale3D(FVector(.7, .3, .6));
-		}
-		else {
-			UE_LOG(LogTemp, Error, TEXT("MeleePlayer, !sword"));
-		}
+	FActorSpawnParameters spawn;
+	sword = GetWorld()->SpawnActor<AOneHandWeapon>(WeaponToSpawn);
+	if (sword != nullptr) {
+		sword->SetOwner(this);
+		sword->AttachToComponent(GetMesh(), FAttachmentTransformRules::SnapToTargetIncludingScale,
+			MainWeaponSocket);
+		AnimInstance->OnDamageWindowStart.AddDynamic(sword, &ABaseWeapon::DamageWindowOn);
+		AnimInstance->OnDamageWindowEnd.AddDynamic(sword, &ABaseWeapon::DamageWindowOff);
+		sword->SetActorRelativeRotation(FRotator(0, -70, 110));
+		sword->SetActorScale3D(FVector(.7, .3, .6));
 	}
 	else {
-		UE_LOG(LogTemp, Error, TEXT("MeleePlayer, !BaseWeapon"));
+		UE_LOG(LogTemp, Error, TEXT("MeleePlayer, !sword"));
 	}
+
 }
 

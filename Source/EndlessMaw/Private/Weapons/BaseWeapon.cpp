@@ -13,13 +13,15 @@ ABaseWeapon::ABaseWeapon()
 	:LightDamage(12.f), HeavyDamage(18.f), AlternateDamage(10.f)
 {
  	// Set this actor to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
-	PrimaryActorTick.bCanEverTick = true;
+	PrimaryActorTick.bCanEverTick = false;
 	PrimaryActorTick.bStartWithTickEnabled = false;
 
 	Mesh = CreateDefaultSubobject<USkeletalMeshComponent>(TEXT("Mesh"));
 	SetRootComponent(Mesh);
+	Mesh->SetCollisionEnabled(ECollisionEnabled::NoCollision);
 	Collider = CreateDefaultSubobject<UBoxComponent>(TEXT("Collider"));
 	Collider->SetupAttachment(RootComponent);
+	Collider->SetGenerateOverlapEvents(true);
 }
 
 // Called when the game starts or when spawned
@@ -31,9 +33,6 @@ void ABaseWeapon::BeginPlay()
 
 	if (!Mesh)
 		UE_LOG(LogTemp, Error, TEXT("baseweapon !mesh"));
-	if (!Mesh->GetSkeletalMeshAsset())
-		UE_LOG(LogTemp, Error, TEXT("baseweapon !mesh->getskeletalmeshasset"));
-	Mesh->SetSkeletalMesh(meshasset);
 }
 
 void ABaseWeapon::HandleOverlapBegin(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
@@ -57,6 +56,16 @@ void ABaseWeapon::HandleOverlapBegin(UPrimitiveComponent* OverlappedComponent, A
 		// call take damage on the actor we hit
 		OtherActor->TakeDamage(damage, damageEvent, nullptr, this->Owner);
 	}
+}
+
+void ABaseWeapon::DamageWindowOn()
+{
+	Collider->SetActive(true);
+}
+
+void ABaseWeapon::DamageWindowOff()
+{
+	Collider->SetActive(false);
 }
 
 // Called every frame

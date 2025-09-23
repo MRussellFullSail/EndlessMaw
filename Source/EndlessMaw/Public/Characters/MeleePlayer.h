@@ -26,13 +26,8 @@ protected:
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Animation")
 	TSubclassOf<UAnimInstance> MovementInstance;
 
-	//UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Weapon")
-	//TSubclassOf<AActor> MeleeWeapon;
-	//UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Weapon")
-	//class AOneHandWeapon* MainWeapon;
+	UPROPERTY()
 	class AOneHandWeapon* sword;
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Weapon")
-	TSubclassOf<class ABaseWeapon> base;
-	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Defaults")
-	USkeletalMesh* weaponmesh;
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Weapon")
+	TSubclassOf<AActor> WeaponToSpawn;
 };
