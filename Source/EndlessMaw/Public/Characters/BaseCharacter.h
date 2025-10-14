@@ -6,6 +6,7 @@
 #include "GameFramework/Character.h"
 #include "Interfaces/PickupInterface.h"
 #include "Enum/ComboEnum.h"
+#include "GameplayTagContainer.h"
 #include "BaseCharacter.generated.h"
 
 UCLASS()
@@ -48,6 +49,9 @@ protected:
 public:	
 	bool isAttacking;
 	bool isDead;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Tags")
+	FGameplayTagContainer PawnTags;
 
 	// Called to bind functionality to input
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;

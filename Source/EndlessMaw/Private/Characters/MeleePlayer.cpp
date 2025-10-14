@@ -5,6 +5,7 @@
 #include "Animation/BaseCharacter/BCAnimInstance.h"
 
 #include "Weapons/OneHandWeapon.h"
+#include "GameplayTags/EMGameplayTags.h"
 
 
 void AMeleePlayer::LightAttack(const FInputActionValue& value)
@@ -17,9 +18,11 @@ void AMeleePlayer::LightAttack(const FInputActionValue& value)
 			// jump to the section to plau
 			AnimInstance->Montage_JumpToSection(GetMontageSection(), LightAttackMontage);
 			// mark that we are unable to attack
-			bCanQueueNextAttack = false;
+			//bCanQueueNextAttack = false;
+			PawnTags.RemoveTag(EMTag::PawnState_CanQueueAttack);
 			AnimInstance->SetMoveable(false);
-			isAttacking = true;
+			//isAttacking = true;
+			PawnTags.AddTag(EMTag::PawnState_Attacking);
 			// play the attack
 			SetComboType(EComboType::Light);
 			PlayAnimMontage(LightAttackMontage, 1.f, MontageSection);

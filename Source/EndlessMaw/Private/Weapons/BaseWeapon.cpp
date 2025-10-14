@@ -30,6 +30,7 @@ void ABaseWeapon::BeginPlay()
 	Super::BeginPlay();
 	Collider->OnComponentBeginOverlap.AddDynamic(this, &ABaseWeapon::HandleOverlapBegin);
 	Collider->SetActive(false);
+	Collider->SetGenerateOverlapEvents(false);
 
 	if (!Mesh)
 		UE_LOG(LogTemp, Error, TEXT("baseweapon !mesh"));
@@ -60,11 +61,17 @@ void ABaseWeapon::HandleOverlapBegin(UPrimitiveComponent* OverlappedComponent, A
 
 void ABaseWeapon::DamageWindowOn()
 {
+	//UE_LOG(LogTemp, Warning, TEXT("turning damage window on"));
+	Collider->SetGenerateOverlapEvents(true);
+
 	Collider->SetActive(true);
 }
 
 void ABaseWeapon::DamageWindowOff()
 {
+	//UE_LOG(LogTemp, Warning, TEXT("turning damage window off"));
+	Collider->SetGenerateOverlapEvents(false);
+
 	Collider->SetActive(false);
 }
 

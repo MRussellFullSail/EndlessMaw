@@ -8,8 +8,9 @@ public class EndlessMaw : ModuleRules
 	{
 		PCHUsage = PCHUsageMode.UseExplicitOrSharedPCHs;
 
-        PublicDependencyModuleNames.AddRange(new string[] { "Core", "CoreUObject", "Engine", "InputCore", "EnhancedInput",
-        "UMG", "AnimGraphRuntime", "AIModule", "GameplayTasks", "NavigationSystem"});
+        PublicDependencyModuleNames.AddRange(new string[] { "Core", "CoreUObject", "Engine", "InputCore", 
+            "EnhancedInput", "UMG", "AnimGraphRuntime", "AIModule", "GameplayTasks", 
+            "NavigationSystem", "GameplayTags"});
 
         PrivateDependencyModuleNames.AddRange(new string[] { });
 

@@ -5,6 +5,7 @@
 #include "Animation/BaseCharacter/BCAnimInstance.h"
 #include "Components/AC_Health.h"
 #include "GameFramework/CharacterMovementComponent.h"
+#include "GameplayTags/EMGameplayTags.h"
 
 
 // Sets default values
@@ -17,7 +18,7 @@ ABaseCharacter::ABaseCharacter()
 	HealthComponent = CreateDefaultSubobject<UAC_Health>(TEXT("Health Component"));
 	GetMesh()->SetRelativeRotation(FRotator(0.0, -90.0, 0.0));
 	GetMesh()->SetRelativeLocation(FVector(0.0, 0.0, -90.0));
-
+	PawnTags.AddTag(EMTag::PawnState_CanQueueAttack);
 }
 
 // Called when the game starts or when spawned
@@ -70,8 +71,10 @@ void ABaseCharacter::HandleDeathStart()
 
 void ABaseCharacter::HandleDeath()
 {
-	if (isDead) return;
-	isDead = true;
+	if (PawnTags.HasTag(EMTag::PawnState_Dead)) return;
+	PawnTags.AddTag(EMTag::PawnState_Dead);
+	//if (isDead) return;
+	//isDead = true;
 	SetActorTickEnabled(false);
 	GetCharacterMovement()->DisableMovement();
 	GetCharacterMovement()->StopActiveMovement();
@@ -96,7 +99,8 @@ void ABaseCharacter::SetQueueNextAttack(bool canqueue)
 
 bool ABaseCharacter::ShouldMove() const
 {
-	return !isAttacking && !AnimInstance->IsAnyMontagePlaying();
+	return !PawnTags.HasTagExact(EMTag::PawnState_Attacking) && !AnimInstance->IsAnyMontagePlaying();
+	//return !isAttacking && !AnimInstance->IsAnyMontagePlaying();
 }
 
 void ABaseCharacter::SetMontageSection(FName section)

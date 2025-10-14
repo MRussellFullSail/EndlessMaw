@@ -4,6 +4,7 @@
 #include "Animation/Notify/QueueAttackNotifyState.h"
 #include "Characters/BaseCharacter.h"
 #include "Animation/BaseCharacter/BCAnimInstance.h"
+#include "GameplayTags/EMGameplayTags.h"
 
 
 void UQueueAttackNotifyState::NotifyBegin(USkeletalMeshComponent* meshComp, UAnimSequenceBase* animation, float totalDuration)
@@ -16,7 +17,8 @@ void UQueueAttackNotifyState::NotifyBegin(USkeletalMeshComponent* meshComp, UAni
 			UAnimMontage* montage = Cast<UAnimMontage>(animation);
 			if (montage) {
 				// we can queue the next attack
-				character->SetQueueNextAttack(true);
+				//character->SetQueueNextAttack(true);
+				character->PawnTags.AddTag(EMTag::PawnState_CanQueueAttack);
 				FName currentSection = animinst->Montage_GetCurrentSection(montage);
 				if (montage->IsValidSectionName(currentSection)) {
 					// where are we in our current combo
@@ -45,12 +47,13 @@ void UQueueAttackNotifyState::NotifyEnd(USkeletalMeshComponent* meshComp, UAnimS
 {
 	ABaseCharacter* character = Cast<ABaseCharacter>(meshComp->GetOwner());
 	if (character) {
-		if (character->CanQueueNextAttack()) { // player never queued an attack, return to opener
+		if (character->PawnTags.HasTag(EMTag::PawnState_CanQueueAttack)) { // player never queued an attack, return to opener
 			character->SetMontageSection(FName("Opener"));
 			UBCAnimInstance* animinst = Cast<UBCAnimInstance>(meshComp->GetAnimInstance());
 			if (animinst) {
 				animinst->SetMoveable(true);
-				character->isAttacking = false;
+				//character->isAttacking = false;
+				character->PawnTags.RemoveTag(EMTag::PawnState_Attacking);
 			}
 		}
 	}
