@@ -11,7 +11,7 @@
 void AMeleePlayer::LightAttack(const FInputActionValue& value)
 {
 	if (IsValid(LightAttackMontage)) {
-		if (CanQueueNextAttack()) { // can we attack?
+		if (PawnTags.HasTagExact(FGameplayTag::RequestGameplayTag("PawnState.CanQueueAttack"))) { // can we attack?
 			if (!AnimInstance->Montage_IsPlaying(LightAttackMontage)) { // no montage is playing, goto the opener
 				AnimInstance->Montage_JumpToSection(FName("Opener"), LightAttackMontage);
 			}
